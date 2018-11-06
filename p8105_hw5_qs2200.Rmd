@@ -86,7 +86,8 @@ baltimore_df =
   homi_df %>%
   filter(city_state == "Baltimore, MD")
 
-prop.test(baltimore_df$unsolve_homi, baltimore_df$total_homi)
+broom::tidy(prop.test(baltimore_df$unsolve_homi, baltimore_df$total_homi)) %>%
+  knitr::kable(digits = 2)
 
 
 ```
