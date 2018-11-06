@@ -6,7 +6,15 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
+## Problem 1
+
+### Dataframe contains file names
+```{r problem 1.1}
+file_name = 
+  data.frame(list.files("./data"))
+
+```
 
