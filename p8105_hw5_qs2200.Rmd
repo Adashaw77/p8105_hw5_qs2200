@@ -14,7 +14,7 @@ library(purrr)
 
 ### Dataframe contains file names
 ```{r problem 1.1}
-zip_file = tibble(file_name = list.files("./data"))
+zip_file = tibble(file_name = list.files("./data/problem1"))
 zip_file
 ```
 
@@ -22,7 +22,7 @@ zip_file
 ```{r problem 1.2, message = F}
 read_file = function(x){
   
-  x = str_c("./data/", x)
+  x = str_c("./data/problem1/", x)
   read_csv(x)
   
 }
@@ -44,7 +44,7 @@ zip_file =
 ```
 
 ### Make a spaghetti plot
-```{r}
+```{r problem 1.4}
 zip_file %>%
   mutate(week = as.numeric(week))%>%
   ggplot(aes(x = week, y = observation, color = id)) +
@@ -56,4 +56,8 @@ zip_file %>%
   )+
   theme_minimal() 
 ```
-  
+
+From this spaghetti plot, we can see that the observations of control arm remain stable during the 8 weeks, but in experimental arm, the value of observations rise obviously as time went on. So we can conclude that there is a association between experiment variable and observation.
+
+## Problem 2
+```{r problem 2.1}
