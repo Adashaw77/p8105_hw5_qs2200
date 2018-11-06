@@ -7,14 +7,29 @@ output: github_document
 
 ```{r setup, include=FALSE}
 library(tidyverse)
+library(purrr)
 ```
 
 ## Problem 1
 
 ### Dataframe contains file names
 ```{r problem 1.1}
-file_name = 
-  data.frame(list.files("./data"))
-
+zip_file = tibble(file_name = list.files("./data"))
+zip_file
 ```
 
+### Read data
+```{r problem 1.2, message = F}
+read_file = function(x){
+  
+  x = str_c("./data/", x)
+  read_csv(x)
+  
+}
+
+zip_file = 
+  zip_file %>%
+  mutate(data = map(zip_file$file_name, read_file))
+```
+
+### Tidy data
