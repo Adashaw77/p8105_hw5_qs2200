@@ -82,7 +82,11 @@ homi_df =
 
 ### Estimate the proportion of unsolved homicides in Baltimore
 ```{r problem 2.3}
+baltimore_df = 
+  homi_df %>%
+  filter(city_state == "Baltimore, MD")
 
+prop.test(baltimore_df$unsolve_homi, baltimore_df$total_homi)
 
 
 ```
