@@ -88,6 +88,12 @@ baltimore_df =
 
 broom::tidy(prop.test(baltimore_df$unsolve_homi, baltimore_df$total_homi)) %>%
   knitr::kable(digits = 2)
+```
 
+### Estimate the proportion of unsolved homicides for each cities
+```{r problem 2.4}
+
+output = map(homi_df$unsolve_homi, homi_df$total_homi, prop.test)
+prop.test(homi_df$unsolve_homi, homi_df$total_homi)
 
 ```
