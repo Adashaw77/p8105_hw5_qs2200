@@ -63,7 +63,7 @@ From this spaghetti plot, we can see that the observations of control arm remain
 
 ### Describe the raw data
 ```{r problem 2.1}
-read_csv("./data/homicide-data.csv")
+read_csv("./data/homicide-data.csv") %>%
 ```
 
 
@@ -86,14 +86,36 @@ baltimore_df =
   homi_df %>%
   filter(city_state == "Baltimore, MD")
 
-broom::tidy(prop.test(baltimore_df$unsolve_homi, baltimore_df$total_homi)) %>%
-  knitr::kable(digits = 2)
+  broom::tidy(prop.test(baltimore_df$unsolve_homi, baltimore_df$total_homi)) %>%
+  select(estimate, conf.low, conf.high) %>%
+  knitr::kable()
 ```
 
 ### Estimate the proportion of unsolved homicides for each cities
 ```{r problem 2.4}
+prop_zip = function(x,y){
+  
+  prop.test(x,y) %>%
+    broom::tidy()
+}
 
-output = map(homi_df$unsolve_homi, homi_df$total_homi, prop.test)
-prop.test(homi_df$unsolve_homi, homi_df$total_homi)
+city_prop =
+  ungroup(homi_df) %>%
+  mutate(prop_test = map2(homi_df$unsolve_homi, homi_df$total_homi, prop_zip))%>%
+  unnest() %>%
+  select(city_state, estimate,conf.low, conf.high)
+```
+
+### Make a error bar plot
+```{r problem 2.5}
+ggplot(data = city_prop,aes(x = city_state,y = estimate)) + 
+  geom_point() +
+  geom_errorbar(aes(ymin = conf.low,ymax = conf.high))+
+  coord_flip()+
+  theme_minimal()+
+  labs(title = "Estimate and 95% CI of unsolved homicides proportion for each city", 
+         x = "City and State", 
+         y = "") 
+```
 
 ```
