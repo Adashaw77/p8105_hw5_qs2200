@@ -33,3 +33,15 @@ zip_file =
 ```
 
 ### Tidy data
+```{r problem 1.3}
+tidy_zip_file = 
+  unnest(zip_file) %>%
+  separate(file_name, into =c("arm", "id"), sep = "_") %>%
+  separate(id, into =c("id", "other"), sep = ".csv") %>%
+  gather(key = week, value = observation, week_1:week_8) %>%
+  separate(week, into = c("rm", "week"), sep = "_") %>%
+  select(-other, -rm )
+```
+
+
+  
