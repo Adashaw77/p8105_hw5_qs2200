@@ -63,7 +63,7 @@ From this spaghetti plot, we can see that the observations of control arm remain
 
 ### Describe the raw data
 ```{r problem 2.1}
-read_csv("./data/homicide-data.csv") %>%
+read_csv("./data/homicide-data.csv") 
 ```
 
 
@@ -107,7 +107,7 @@ city_prop =
 ```
 
 ### Make a error bar plot
-```{r problem 2.5}
+```{r problem 2.5, fig.height=8}
 ggplot(data = city_prop,aes(x = city_state,y = estimate)) + 
   geom_point() +
   geom_errorbar(aes(ymin = conf.low,ymax = conf.high))+
@@ -116,6 +116,4 @@ ggplot(data = city_prop,aes(x = city_state,y = estimate)) +
   labs(title = "Estimate and 95% CI of unsolved homicides proportion for each city", 
          x = "City and State", 
          y = "") 
-```
-
 ```
