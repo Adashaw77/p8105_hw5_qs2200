@@ -60,4 +60,29 @@ zip_file %>%
 From this spaghetti plot, we can see that the observations of control arm remain stable during the 8 weeks, but in experimental arm, the value of observations rise obviously as time went on. So we can conclude that there is a association between experiment variable and observation.
 
 ## Problem 2
+
+### Describe the raw data
 ```{r problem 2.1}
+read_csv("./data/homicide-data.csv")
+```
+
+
+### Tidy and summarise the data
+```{r problem 2.2}
+homi_df = 
+  read_csv("./data/homicide-data.csv") %>%
+  mutate(city_state = str_c(city, ", ", state)) %>%
+  group_by(city_state, disposition) %>%
+  summarise(total= n()) %>%
+  spread(key = disposition, value = total) %>%
+  janitor::clean_names() %>%
+  mutate(total_homi = rowSums(cbind(closed_by_arrest, closed_without_arrest, open_no_arrest), na.rm = T), unsolve_homi = rowSums(cbind(closed_without_arrest, open_no_arrest), na.rm = T)) %>%
+  select(- closed_by_arrest, - closed_without_arrest, -open_no_arrest)
+```
+
+### Estimate the proportion of unsolved homicides in Baltimore
+```{r problem 2.3}
+
+
+
+```
