@@ -15,7 +15,6 @@ library(purrr)
 ### Dataframe contains file names
 ```{r problem 1.1}
 zip_file = tibble(file_name = list.files("./data/problem1"))
-zip_file
 ```
 
 ### Read data
@@ -41,6 +40,8 @@ zip_file =
   gather(key = week, value = observation, week_1:week_8) %>%
   separate(week, into = c("rm", "week"), sep = "_") %>%
   select(-other, -rm )
+
+zip_file
 ```
 
 ### Make a spaghetti plot
@@ -62,7 +63,7 @@ From this spaghetti plot, we can see that the observations of control arm remain
 ## Problem 2
 
 ### Describe the raw data
-```{r problem 2.1}
+```{r problem 2.1, message=F}
 homi_df = read_csv("./data/homicide-data.csv") 
 ```
 
@@ -123,5 +124,5 @@ ggplot(data = city_prop,aes(x = city_state,y = estimate)) +
   theme_minimal()+
   labs(title = "Estimate and 95% CI of unsolved homicides proportion for each city", 
          x = "City and State", 
-         y = "") 
+         y = "Confidence interval") 
 ```
