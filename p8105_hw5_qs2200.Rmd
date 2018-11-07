@@ -63,14 +63,17 @@ From this spaghetti plot, we can see that the observations of control arm remain
 
 ### Describe the raw data
 ```{r problem 2.1}
-read_csv("./data/homicide-data.csv") 
+homi_df = read_csv("./data/homicide-data.csv") 
 ```
 
+The dataset contains `r ncol(homi_df)` variables, including the id and reported time of cases, the identity of victims(name, age, sex and race), as well as the position of homicides(state, city, longitude and latitude). It also contains the disposition status of homicides.
+
+There are `r nrow(homi_df)` homicides across 50 cities in the dataset.
 
 ### Tidy and summarise the data
 ```{r problem 2.2}
 homi_df = 
-  read_csv("./data/homicide-data.csv") %>%
+  homi_df%>%
   mutate(city_state = str_c(city, ", ", state)) %>%
   group_by(city_state, disposition) %>%
   summarise(total= n()) %>%
@@ -80,8 +83,13 @@ homi_df =
   select(- closed_by_arrest, - closed_without_arrest, -open_no_arrest)
 ```
 
-### Estimate the proportion of unsolved homicides in Baltimore
+In the description of the dataset, we know that it contains homicides from 50 cities, but after summarising total number homicides of each city, there are `r nrow(homi_df)` total numbers. In the row of "Tulsa, AL", there is only one homicide. Because we know that Tulsa is actually in OK, and the longitude and latitude also shows that this homicide was happened in Tulsa, OK. So it might be a typing mistake in location. We should exclude it in further analysis of the data.
+
 ```{r problem 2.3}
+homi_df = homi_df[-49,]
+```
+### Estimate the proportion of unsolved homicides in Baltimore
+```{r problem 2.4}
 baltimore_df = 
   homi_df %>%
   filter(city_state == "Baltimore, MD")
@@ -92,7 +100,7 @@ baltimore_df =
 ```
 
 ### Estimate the proportion of unsolved homicides for each cities
-```{r problem 2.4}
+```{r problem 2.5}
 prop_zip = function(x,y){
   
   prop.test(x,y) %>%
@@ -107,7 +115,7 @@ city_prop =
 ```
 
 ### Make a error bar plot
-```{r problem 2.5, fig.height=8}
+```{r problem 2.6, fig.height=8}
 ggplot(data = city_prop,aes(x = city_state,y = estimate)) + 
   geom_point() +
   geom_errorbar(aes(ymin = conf.low,ymax = conf.high))+
