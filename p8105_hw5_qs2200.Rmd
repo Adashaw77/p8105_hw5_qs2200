@@ -44,6 +44,8 @@ zip_file =
 zip_file
 ```
 
+I wrote a function to read all files in the folder, and tidied the data. The final dataset have 4 variables, the arm indicating the control or experimental arm, the id of the participants, the week of observation and observation value.
+
 ### Make a spaghetti plot
 ```{r problem 1.4}
 zip_file %>%
@@ -100,6 +102,8 @@ baltimore_df =
   knitr::kable()
 ```
 
+Thhis table shows the estimated proportion and confidence interval of unsolved homicides in Baltimore. The estimate proportion is 64.6% in Baltimore with 95% CI(62.8%, 66.3%).
+
 ### Estimate the proportion of unsolved homicides for each cities
 ```{r problem 2.5}
 prop_zip = function(x,y){
@@ -126,5 +130,5 @@ ggplot(data = city_prop,aes(x = city_state,y = estimate)) +
   theme_minimal()+
   labs(title = "Estimate and 95% CI of unsolved homicides proportion for each city", 
          x = "City and State", 
-         y = "Confidence interval") 
+         y = "Proportion of unsolved homicides") 
 ```
